@@ -46,23 +46,19 @@ triangles
 void draw_polygons( struct matrix *polygons, screen s, color c ) {
   int point = 0;
   for(point = 0; point < polygons->lastcol - 3; point+=3){
-      draw_line(polygons->m[0][point],
+    double ax = polygons->m[0][point + 1] - polygons->m[0][point];
+    double ay = polygons->m[1][point + 1] - polygons->m[1][point];
+    double az = polygons->m[2][point + 1] - polygons->m[2][point];
+    double bx = polygons->m[0][point + 2] - polygons->m[0][point];
+    double by = polygons->m[1][point + 2] - polygons->m[1][point];
+    double bz = polygons->m[2][point + 2] - polygons->m[2][point];
+    double nz = ax*by - ay*bx;
+    if (nz >= 0){
+    draw_line(polygons->m[0][point],
 		polygons->m[1][point],
 		polygons->m[0][point+1],
 		polygons->m[1][point+1],
 		s ,c);
-      printf("drawing from %lf, %lf to %lf, %lf\n",polygons->m[0][point],
-		polygons->m[1][point],
-		polygons->m[0][point+1],
-	     polygons->m[1][point+1]);
-      printf("drawing from %lf, %lf to %lf, %lf\n",polygons->m[0][point+1],
-		polygons->m[1][point+1],
-		polygons->m[0][point+2],
-	     polygons->m[1][point+2]);
-      printf("drawing from %lf, %lf to %lf, %lf\n",polygons->m[0][point],
-		polygons->m[1][point],
-		polygons->m[0][point+2],
-	     polygons->m[1][point+2]);
       draw_line(polygons->m[0][point+1],
 		polygons->m[1][point+1],
 		polygons->m[0][point+2],
@@ -73,6 +69,7 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 		polygons->m[0][point+2],
 		polygons->m[1][point+2],
 		s, c);
+    }
   }
 
 }
@@ -106,27 +103,27 @@ void add_box( struct matrix * edges,
 
   //front
 
-  add_polygon(edges, x0, y0, z0, x0, y1, z0, x1, y1, z0);
-  add_polygon(edges, x1, y0, z0, x0, y1, z0, x1, y0, z0);
+  add_polygon(edges, x1, y1, z0, x0, y0, z0, x1, y0, z0);
+  add_polygon(edges, x1, y1, z0, x0, y1, z0, x1, y0, z0);
   //back
   
-  add_polygon(edges, x0, y0, z1, x1, y0, z1, x1, y1, z1);
-  add_polygon(edges, x0, y0, z1, x1, y1, z1, x0, y1, z1);
+  add_polygon(edges, x1, y1, z1, x0, y0, z1, x1, y0, z1);
+  add_polygon(edges, x1, y1, z1, x0, y1, z1, x1, y0, z1);
 
   //right
 
-  add_polygon(edges, x0, y0, z0, x0, y0, z1, x0, y1, z1);
-  add_polygon(edges, x0, y0, z0, x0, y1, z1, x0, y1, z0);
+  add_polygon(edges, x1, y1, z0, x1, y1, z1, x1, y0, z1);
+  add_polygon(edges, x1, y1, z0, x1, y0, z1, x1, y0, z0);
 
-  add_polygon(edges, x1, y0, z0, x1, y0, z1, x1, y1, z1);
-  add_polygon(edges, x1, y0, z0, x1, y1, z1, x1, y1, z0);
+  add_polygon(edges, x0, y1, z0, x0, y1, z1, x0, y0, z1);
+  add_polygon(edges, x0, y1, z0, x0, y0, z1, x0, y0, z0);
   
-  add_polygon(edges, x0, y0, z0, x0, y0, z1, x1, y0, z1);
-  add_polygon(edges, x0, y0, z0, x1, y0, z1, x1, y0, z0);
+  add_polygon(edges, x0, y1, z0, x1, y1, z0, x1, y1, z1);
+  add_polygon(edges, x0, y1, z0, x1, y1, z1, x0, y1, z1);
   
   
-  add_polygon(edges, x0, y1, z0, x0, y1, z1, x1, y1, z1);
-  add_polygon(edges, x0, y1, z0, x1, y1, z1, x1, y1, z0);
+  add_polygon(edges, x0, y0, z0, x1, y0, z0, x1, y1, z1);
+  add_polygon(edges, x0, y0, z0, x1, y1, z1, x0, y0, z1);
   
 }
 

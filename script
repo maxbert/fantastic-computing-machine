@@ -9,6 +9,6 @@ y 20
 move
 150 200 0
 apply
-display
-
+save
+file.png
 
