@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include "stack.h"
 #include "matrix.h"
 
 /*======== struct matrix * make_bezier() ==========

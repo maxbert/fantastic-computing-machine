@@ -6,7 +6,7 @@
 #include "draw.h"
 #include "matrix.h"
 #include "math.h"
-
+#include "stack.h"
 /*======== void add_polygon() ==========
 Inputs:   struct matrix *surfaces
          double x0
@@ -53,8 +53,8 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
     double by = polygons->m[1][point + 2] - polygons->m[1][point];
     double bz = polygons->m[2][point + 2] - polygons->m[2][point];
     double nz = ax*by - ay*bx;
-
-    if (nz >= 0){
+    
+    if (nz > 0){
     draw_line(polygons->m[0][point],
 		polygons->m[1][point],
 		polygons->m[0][point+1],
